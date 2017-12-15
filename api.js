@@ -48,5 +48,5 @@ function getInfo(amount) {
 }
 
 module.exports = {
-  getInfo
+  getInfo,
 };
