@@ -17,7 +17,7 @@ const amountOptions = {
 const frequencyOptions = {
   alias: 'frequency',
   default: 10,
-  describe: 'Set the seconds for chatbot checking',
+  describe: 'Set the seconds for chatbot checking the arbitrage percentage',
   type: 'number'
 };
 
@@ -25,6 +25,13 @@ const rateOptions = {
   alias: 'rate',
   default: 8,
   describe: 'Set the arbitrage rate for the chatbot to send alerts for',
+  type: 'number'
+};
+
+const timeOptions = {
+  alias: 'time',
+  default: 10,
+  describe: 'Set the time (in minutes) for how often the chatbot should messages',
   type: 'number'
 };
 
@@ -43,6 +50,7 @@ module.exports = yargs
     'c': cryptoOptions,
     'f': frequencyOptions,
     'r': rateOptions,
+    't': timeOptions,
   })
   .help()
   .argv;

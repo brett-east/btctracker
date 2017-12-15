@@ -1,7 +1,5 @@
-const axios = require('axios');
 const login = require('facebook-chat-api');
 const moment = require('moment');
-const yargs = require('yargs');
 
 const config = require('./config');
 const api = require('./api');
@@ -14,11 +12,15 @@ const argv = require('./args');
 //     thread: process.env.FB_THREAD
 // }
 
-// set argument defaults
+// set argument defaults and variable names
 let frequency = argv.f * 1000 || 10000;
+let time = argv.t * 60;
+let currency = argv.c;
+let amount = argv.a;
+let rate = argv.r;
 let command = argv._[0] || 'info';
 
-let lastMessageTime = moment().unix() - 601;
+let lastMessageTime = moment().unix() - (time + 1);
 
 function showInfo(currency, amount) {
   api.getInfo(amount).then((data) => {
@@ -50,11 +52,11 @@ function showChart(currency) {
 }
 
 if (command === 'info') {
-  showInfo(argv.c, argv.a);
+  showInfo(currency, amount);
 }
 
 if (command === 'chart') {
-  setInterval(showChart, 1000, argv.c);
+  setInterval(showChart, 1000, currency);
 }
 
 if (command === 'track') {
@@ -65,11 +67,11 @@ if (command === 'track') {
         api.getInfo().then((data) => {
           const { percentDiff } = data;
 
-          let message = `The current arbitrage percentage is ${percentDiff}%`
+          let message = `The current ${currency} arbitrage percentage is ${percentDiff}%`
 
-          let sendNewMessage = (moment().unix() - lastMessageTime) > 600;
+          let sendNewMessage = (moment().unix() - lastMessageTime) > time;
 
-          if (percentDiff > arg.r && sendNewMessage) {
+          if (percentDiff > rate && sendNewMessage) {
             lastMessageTime = moment().unix();
             console.log(message);
             chatApi.sendMessage(message, config.thread);
