@@ -2,7 +2,7 @@ const argv = require('./args');
 const { showInfo, showChart, sendMessage } = require('./logger');
 
 // set argument defaults and variable names
-let frequency = argv.f * 1000 || 10000;
+let frequency = argv.f * 1000;
 let time = argv.t * 60;
 let currency = argv.c;
 let amount = argv.a;
@@ -14,7 +14,7 @@ if (command === 'info') {
 }
 
 if (command === 'chart') {
-  setInterval(showChart, 1000, currency);
+  showChart(frequency, currency);
 }
 
 if (command === 'track') {

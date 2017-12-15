@@ -38,15 +38,17 @@ const timeOptions = {
 
 module.exports = yargs
   .command('chart', 'Chart the arbitrage difference', {
-    'a': amountOptions,
     'c': cryptoOptions,
+    'f': { ...frequencyOptions,
+      'default': 1,
+      describe: 'Set how often to chart the arbitrage rate in seconds',
+    },
   })
   .command('info', 'Show info for the currency', {
     'a': amountOptions,
     'c': cryptoOptions,
   })
   .command('track', 'Send facebook chat messages', {
-    'a': amountOptions,
     'c': cryptoOptions,
     'f': frequencyOptions,
     'r': rateOptions,

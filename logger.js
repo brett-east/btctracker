@@ -29,15 +29,17 @@ function showInfo(currency, amount) {
   });
 }
 
-function showChart(currency) {
-  api.getInfo().then((data) => {
-    const { percentDiff, currUSD } = data;
+function showChart(frequency, currency) {
+  setInterval(() => {
+    api.getInfo().then((data) => {
+      const { percentDiff, currUSD } = data;
 
-    const symbolPercent = Math.floor((percentDiff * 10)) + 1; // add one because join Array is inbetween array values
-    const symbolPrint = Array(symbolPercent).join('#');
+      const symbolPercent = Math.floor((percentDiff * 10)) + 1; // add one because join Array is inbetween array values
+      const symbolPrint = Array(symbolPercent).join('#');
 
-    console.log(`${symbolPrint} | ${currency} ${percentDiff}% $${currUSD}`);
-  });
+      console.log(`${symbolPrint} | ${currency} ${percentDiff}% $${currUSD}`);
+    });
+  }, frequency);
 }
 
 function sendMessage(frequency, currency, rate, time) {
