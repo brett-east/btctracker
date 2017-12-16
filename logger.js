@@ -26,7 +26,8 @@ function showInfo(currency, amount) {
       `Diff: ${currDiff} | Percent: ${percentDiff}%`;
 
     console.log(message);
-  });
+  })
+  .catch((err) => console.log(err.response.data.message));
 }
 
 function showChart(frequency, currency) {
@@ -38,7 +39,8 @@ function showChart(frequency, currency) {
       const symbolPrint = Array(symbolPercent).join('#');
 
       console.log(`${symbolPrint} | ${currency} ${percentDiff}% $${currUSD}`);
-    });
+    })
+    .catch((err) => console.log(err.response.data.message));
   }, frequency);
 }
 
@@ -62,7 +64,7 @@ function sendMessage(frequency, currency, rate, time) {
           chatApi.sendMessage(message, config.thread);
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err.response.data.message));
     }, frequency);
   });
 }
